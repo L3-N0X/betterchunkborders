@@ -3,9 +3,9 @@ import java.net.URL
 import java.net.URLClassLoader
 
 plugins {
-	id("net.fabricmc.fabric-loom-remap")
+	id("net.fabricmc.fabric-loom")
 	`maven-publish`
-	id("org.jetbrains.kotlin.jvm") version "2.3.21"
+	id("org.jetbrains.kotlin.jvm") version "2.4.0"
 }
 
 version = providers.gradleProperty("mod_version").get()
@@ -36,18 +36,17 @@ loom {
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
-	mappings(loom.officialMojangMappings())
-	modImplementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
+	implementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
-	modImplementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
+	implementation("net.fabricmc.fabric-api:fabric-api:${providers.gradleProperty("fabric_api_version").get()}")
+	implementation("net.fabricmc:fabric-language-kotlin:${providers.gradleProperty("fabric_kotlin_version").get()}")
 
 	// YACL
-	modImplementation("dev.isxander:yet-another-config-lib:${providers.gradleProperty("yacl_version").get()}")
+	implementation("dev.isxander:yet-another-config-lib:${providers.gradleProperty("yacl_version").get()}")
 
 	// ModMenu
-	modImplementation("com.terraformersmc:modmenu:${providers.gradleProperty("modmenu_version").get()}")
+	implementation("com.terraformersmc:modmenu:${providers.gradleProperty("modmenu_version").get()}")
 }
 
 tasks.processResources {
@@ -59,24 +58,18 @@ tasks.processResources {
 	}
 }
 
-tasks.withType<JavaCompile>().configureEach {
-	options.release = 21
-}
-
 kotlin {
-	compilerOptions {
-		jvmTarget = JvmTarget.JVM_21
-	}
+	jvmToolchain(25)
 }
 
 java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of(25))
+	}
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
-
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
 }
 
 tasks.jar {
