@@ -1,41 +1,33 @@
 # Better Chunk Borders
 
-A premium, highly configurable Minecraft Fabric mod designed to enhance the debug chunk border visualizer (normally toggled via `F3` + `G`).
-
-Built with **YetAnotherConfigLib (YACL)** and **Mod Menu**, this mod replaces the plain, cluttering default vanilla chunk boundaries with clean, customizable, and modern visuals.
-
-## TODO
-
-- Anti-aliasing
-- per block gradient with higher resolution
-- always start gradient at -64 but make it at camera transition
-- better gradient config for height and so on
+Better Chunk Borders is a Minecraft Fabric mod that improves the visuals of the default chunk debug renderer. It replaces the default chunk border renderer (rather than adding a new one on top), meaning the borders are still toggled using the vanilla `F3` + `G` key combination.
 
 ## Features
 
-- 📏 **Custom Grid Spacing**: Control the frequency of internal vertical grid lines within the chunk (spacing increments of 1, 2, 4, 8, or 16).
-- 🎨 **Solid Border Customization**: Fully customize the color and thickness of the chunk perimeter lines.
-- 🌌 **Translucent Gradient Walls**: Render gorgeous, semi-transparent boundary walls that fade from a custom bottom color to a custom top color.
-- 🧱 **Depth Testing (No X-Ray)**: Mod boundaries and gradients respect terrain depth, so they won't render through solid blocks.
-- ⚙️ **In-Game Configuration**: Powered by YetAnotherConfigLib (YACL), easily adjust options in-game through the Mod Menu.
+- **Custom Grid Spacing**: Control the frequency of internal vertical grid lines within the chunk (spacing increments of 1, 2, 4, 8, or 16).
+- **Border Customization**: Customize the color, thickness, and corner line colors of the chunk borders.
+- **Gradient Walls**: Render semi-transparent boundary walls that fade between custom bottom and top colors.
+- **Terrain Heightmap Adaptation**: Option to adapt borders and gradients to the terrain surface height, with optional sloped terrain gradients and height smoothing.
+- **Player Height Tracking**: Option to make lines and gradients relative to the player's height.
+- **Horizontal Lines**: Add custom horizontal grid lines that can optionally follow the player.
+- **In-Game Configuration**: Configure all options in-game via Mod Menu.
 
 ## Requirements
 
 Ensure you have the following installed:
 
-- Minecraft `1.21.11`
 - Fabric Loader
 - Fabric API
 - Fabric Language Kotlin
-- YetAnotherConfigLib (YACL) v3
+- YetAnotherConfigLib (YACL)
 - Mod Menu
 
 ## Building the Mod
 
 To build the mod from source, clone the repository and run the Gradle build task:
 
-```powershell
-.\gradlew.bat build
+```bash
+./gradlew build
 ```
 
 The compiled mod `.jar` will be available in `build/libs/`.
