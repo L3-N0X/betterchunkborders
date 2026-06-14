@@ -8,312 +8,11 @@ import dev.isxander.yacl3.api.controller.TickBoxControllerBuilder
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.Identifier
 import java.awt.Color
 
 object ConfigScreenProvider {
     private val SPACING_VALUES = listOf(1, 2, 4, 8, 16)
-
-    private fun applyPreset(preset: String, config: ModConfig) {
-        // Reset horizontal settings to defaults
-        config.renderHorizontalLines = false
-        config.horizontalLineColor = Color(255, 0, 0, 255)
-        config.horizontalLineWidth = 2.0f
-        config.horizontalLineSpacing = 4.0f
-        config.horizontalLineOffset = 0.0f
-        config.horizontalLinesFollowPlayer = false
-        config.horizontalLinesAbovePlayer = 1
-        config.horizontalLinesBelowPlayer = 0
-        config.horizontalLineHeight = 0.0f
-        config.smoothLineMovement = true
-        config.mirrorGradient = true
-
-        // Reset player height smoothing settings to defaults
-        config.smoothPlayerHeight = true
-        config.playerHeightSmoothingSpeed = 5.0f
-
-        when (preset) {
-            "vanilla_plus" -> {
-                config.gridSpacing = 4
-                config.lineColor = Color(0xff, 0xff, 0x00, 0xff)
-                config.lineWidth = 2.0f
-                config.renderGradients = false
-                config.gradientTopColor = Color(0xff, 0xee, 0x00, 0x00)
-                config.gradientBottomColor = Color(0x9a, 0x9c, 0x1d, 0x75)
-                config.gradientMaxHeight = 64.0f
-                config.renderSurroundingBorders = false
-                config.surroundingBordersColor = Color(0x3b, 0x8e, 0x73, 0x73)
-                config.useGradientLines = false
-                config.lineHeightAbovePlayer = 1.0f
-                config.lineHeightBelowPlayer = 64.0f
-                config.useTerrainHeightmap = true
-                config.slopeTerrainGradients = true
-                config.terrainGradientHeight = 1.0f
-                config.terrainLineHeight = 12.0f
-                config.renderLines = true
-                config.terrainAdaptionSteps = 4
-                config.gradientUndergroundColor = Color(0xff, 0xf8, 0x00, 0x0f)
-                config.smoothTerrainHeight = false
-                config.limitLineHeight = true
-                config.smoothPlayerHeight = false
-                config.playerHeightSmoothingSpeed = 5.0f
-                config.renderHorizontalLines = true
-                config.horizontalLineColor = Color(0xff, 0xff, 0x00, 0xff)
-                config.horizontalLineWidth = 2.0f
-                config.horizontalLineSpacing = 4.0f
-                config.horizontalLineOffset = 0.0f
-                config.horizontalLinesFollowPlayer = true
-                config.horizontalLinesAbovePlayer = 1
-                config.horizontalLinesBelowPlayer = 20
-                config.horizontalLineHeight = 0.0f
-                config.smoothLineMovement = false
-            }
-            "red_gradient_adaptive" -> {
-                config.modEnabled = true
-                config.gridSpacing = 16
-                config.lineColor = Color(0xff, 0x00, 0x00, 0xff)
-                config.lineWidth = 2.0f
-                config.renderGradients = true
-                config.gradientTopColor = Color(0xff, 0x00, 0x00, 0x00)
-                config.gradientBottomColor = Color(0xff, 0x00, 0x00, 0x64)
-                config.gradientMaxHeight = 64.0f
-                config.renderSurroundingBorders = false
-                config.surroundingBordersColor = Color(0xff, 0x00, 0x00, 0xff)
-                config.useGradientLines = true
-                config.lineHeightAbovePlayer = 9.0f
-                config.lineHeightBelowPlayer = 9.0f
-                config.useTerrainHeightmap = true
-                config.slopeTerrainGradients = true
-                config.terrainGradientHeight = 3.0f
-                config.terrainLineHeight = 3.0f
-                config.renderLines = true
-                config.terrainAdaptionSteps = 8
-                config.gradientUndergroundColor = Color(0xff, 0x00, 0x00, 0x16)
-                config.smoothTerrainHeight = true
-                config.limitLineHeight = true
-                config.smoothPlayerHeight = true
-                config.playerHeightSmoothingSpeed = 5.0f
-                config.renderHorizontalLines = false
-                config.horizontalLineColor = Color(0xff, 0x00, 0x00, 0xff)
-                config.horizontalLineWidth = 2.0f
-                config.horizontalLineSpacing = 4.0f
-                config.horizontalLineOffset = 0.0f
-                config.horizontalLinesFollowPlayer = false
-                config.horizontalLinesAbovePlayer = 1
-                config.horizontalLinesBelowPlayer = 0
-                config.horizontalLineHeight = 0.0f
-                config.smoothLineMovement = true
-            }
-            "terrain_adaptive_sloped" -> {
-                config.gridSpacing = 16
-                config.lineColor = Color(255, 0, 0, 255)
-                config.lineWidth = 2.0f
-                config.renderGradients = true
-                config.gradientTopColor = Color(255, 0, 0, 0)
-                config.gradientBottomColor = Color(255, 0, 0, 100)
-                config.useGradientLines = true
-                config.useTerrainHeightmap = true
-                config.slopeTerrainGradients = true
-                config.terrainGradientHeight = 24.0f
-                config.terrainLineHeight = 24.0f
-                config.renderSurroundingBorders = false
-                config.renderLines = true
-                config.terrainAdaptionSteps = 16
-                config.gradientUndergroundColor = Color(255, 0, 0, 30)
-                config.smoothTerrainHeight = true
-                config.limitLineHeight = true
-            }
-            "red_grid_adaptive" -> {
-                config.modEnabled = true
-                config.gridSpacing = 4
-                config.lineColor = Color(0xff, 0x00, 0x00, 0xff)
-                config.lineWidth = 2.0f
-                config.renderGradients = false
-                config.gradientTopColor = Color(0xff, 0x00, 0x00, 0x00)
-                config.gradientBottomColor = Color(0xff, 0x00, 0x00, 0x64)
-                config.gradientMaxHeight = 64.0f
-                config.renderSurroundingBorders = false
-                config.surroundingBordersColor = Color(0xff, 0x00, 0x00, 0xff)
-                config.useGradientLines = true
-                config.lineHeightAbovePlayer = 64.0f
-                config.lineHeightBelowPlayer = 64.0f
-                config.useTerrainHeightmap = true
-                config.slopeTerrainGradients = true
-                config.terrainGradientHeight = 4.0f
-                config.terrainLineHeight = 4.0f
-                config.renderLines = true
-                config.terrainAdaptionSteps = 16
-                config.gradientUndergroundColor = Color(0xff, 0x00, 0x00, 0x1e)
-                config.smoothTerrainHeight = true
-                config.limitLineHeight = true
-                config.smoothPlayerHeight = true
-                config.playerHeightSmoothingSpeed = 5.0f
-                config.renderHorizontalLines = false
-                config.horizontalLineColor = Color(0xff, 0x00, 0x00, 0xff)
-                config.horizontalLineWidth = 2.0f
-                config.horizontalLineSpacing = 4.0f
-                config.horizontalLineOffset = 0.0f
-                config.horizontalLinesFollowPlayer = false
-                config.horizontalLinesAbovePlayer = 1
-                config.horizontalLinesBelowPlayer = 0
-                config.horizontalLineHeight = 0.0f
-                config.smoothLineMovement = true
-            }
-            "no_lines_green" -> {
-                config.gridSpacing = 16
-                config.lineColor = Color(0x22, 0x89, 0x42, 0xff)
-                config.lineWidth = 1.5f
-                config.renderGradients = true
-                config.gradientTopColor = Color(0x00, 0xff, 0x8d, 0x00)
-                config.gradientBottomColor = Color(0x1d, 0x9c, 0x2b, 0x75)
-                config.gradientMaxHeight = 64.0f
-                config.renderSurroundingBorders = true
-                config.surroundingBordersColor = Color(0x3b, 0x8e, 0x73, 0x73)
-                config.useGradientLines = true
-                config.lineHeightAbovePlayer = 4.0f
-                config.lineHeightBelowPlayer = 64.0f
-                config.useTerrainHeightmap = true
-                config.slopeTerrainGradients = true
-                config.terrainGradientHeight = 1.5f
-                config.terrainLineHeight = 3.0f
-                config.renderLines = false
-                config.terrainAdaptionSteps = 16
-                config.gradientUndergroundColor = Color(0x00, 0xff, 0xc1, 0x0f)
-                config.smoothTerrainHeight = true
-                config.limitLineHeight = true
-            }
-            "clean_white_grid" -> {
-                config.gridSpacing = 4
-                config.lineColor = Color(0xff, 0xff, 0xff, 0xff)
-                config.lineWidth = 1.0f
-                config.renderGradients = true
-                config.gradientTopColor = Color(0xff, 0xff, 0xff, 0x00)
-                config.gradientBottomColor = Color(0xff, 0xff, 0xff, 0x34)
-                config.gradientMaxHeight = 64.0f
-                config.renderSurroundingBorders = false
-                config.surroundingBordersColor = Color(0x3b, 0x8e, 0x73, 0x73)
-                config.useGradientLines = false
-                config.lineHeightAbovePlayer = 2.0f
-                config.lineHeightBelowPlayer = 32.0f
-                config.useTerrainHeightmap = true
-                config.slopeTerrainGradients = true
-                config.terrainGradientHeight = 1.0f
-                config.terrainLineHeight = 1.0f
-                config.renderLines = true
-                config.terrainAdaptionSteps = 4
-                config.gradientUndergroundColor = Color(0xff, 0xff, 0xff, 0x05)
-                config.smoothTerrainHeight = false
-                config.limitLineHeight = true
-                config.smoothPlayerHeight = false
-            }
-            "minimalist" -> {
-                config.modEnabled = true
-                config.gridSpacing = 16
-                config.lineColor = Color(0xb3, 0xd2, 0x69, 0xc8)
-                config.lineWidth = 2.0f
-                config.renderGradients = false
-                config.gradientTopColor = Color(0x80, 0xff, 0x00, 0x00)
-                config.gradientBottomColor = Color(0x8a, 0xff, 0x00, 0x64)
-                config.gradientMaxHeight = 64.0f
-                config.renderSurroundingBorders = false
-                config.surroundingBordersColor = Color(0xff, 0xcf, 0x00, 0xff)
-                config.useGradientLines = true
-                config.lineHeightAbovePlayer = 12.0f
-                config.lineHeightBelowPlayer = 12.0f
-                config.useTerrainHeightmap = false
-                config.slopeTerrainGradients = true
-                config.terrainGradientHeight = 4.0f
-                config.terrainLineHeight = 4.0f
-                config.renderLines = true
-                config.terrainAdaptionSteps = 16
-                config.gradientUndergroundColor = Color(0xa9, 0xff, 0x00, 0x1e)
-                config.smoothTerrainHeight = false
-                config.limitLineHeight = true
-                config.smoothPlayerHeight = true
-                config.playerHeightSmoothingSpeed = 5.0f
-                config.renderHorizontalLines = false
-                config.horizontalLineColor = Color(0xff, 0x00, 0x00, 0xff)
-                config.horizontalLineWidth = 2.0f
-                config.horizontalLineSpacing = 4.0f
-                config.horizontalLineOffset = 0.0f
-                config.horizontalLinesFollowPlayer = false
-                config.horizontalLinesAbovePlayer = 1
-                config.horizontalLinesBelowPlayer = 0
-                config.horizontalLineHeight = 0.0f
-                config.smoothLineMovement = true
-            }
-            "teal_layers" -> {
-                config.modEnabled = true
-                config.gridSpacing = 8
-                config.lineColor = Color(0x2f, 0x7f, 0x86, 0xff)
-                config.lineWidth = 2.0f
-                config.renderGradients = false
-                config.gradientTopColor = Color(0x00, 0xff, 0x8d, 0x00)
-                config.gradientBottomColor = Color(0x1d, 0x9c, 0x2b, 0x75)
-                config.gradientMaxHeight = 64.0f
-                config.renderSurroundingBorders = false
-                config.surroundingBordersColor = Color(0x3b, 0x8e, 0x73, 0x73)
-                config.useGradientLines = false
-                config.lineHeightAbovePlayer = 0.4f
-                config.lineHeightBelowPlayer = 64.0f
-                config.useTerrainHeightmap = false
-                config.slopeTerrainGradients = true
-                config.terrainGradientHeight = 1.5f
-                config.terrainLineHeight = 3.0f
-                config.renderLines = true
-                config.terrainAdaptionSteps = 16
-                config.gradientUndergroundColor = Color(0x00, 0xff, 0xc1, 0x0f)
-                config.smoothTerrainHeight = false
-                config.limitLineHeight = true
-                config.smoothPlayerHeight = true
-                config.playerHeightSmoothingSpeed = 12.0f
-                config.renderHorizontalLines = true
-                config.horizontalLineColor = Color(0x60, 0xa7, 0xb1, 0xff)
-                config.horizontalLineWidth = 2.0f
-                config.horizontalLineSpacing = 2.0f
-                config.horizontalLineOffset = 0.20000012f
-                config.horizontalLinesFollowPlayer = true
-                config.horizontalLinesAbovePlayer = 1
-                config.horizontalLinesBelowPlayer = 1
-                config.horizontalLineHeight = 0.0f
-            }
-            "green_layers" -> {
-                config.modEnabled = true
-                config.gridSpacing = 16
-                config.lineColor = Color(0x30, 0x86, 0x2f, 0xff)
-                config.lineWidth = 2.0f
-                config.renderGradients = false
-                config.gradientTopColor = Color(0x00, 0xff, 0x8d, 0x00)
-                config.gradientBottomColor = Color(0x1d, 0x9c, 0x2b, 0x75)
-                config.gradientMaxHeight = 64.0f
-                config.renderSurroundingBorders = false
-                config.surroundingBordersColor = Color(0x3b, 0x8e, 0x73, 0x73)
-                config.useGradientLines = false
-                config.lineHeightAbovePlayer = 1.0f
-                config.lineHeightBelowPlayer = 64.0f
-                config.useTerrainHeightmap = true
-                config.slopeTerrainGradients = true
-                config.terrainGradientHeight = 1.0f
-                config.terrainLineHeight = 5.0f
-                config.renderLines = true
-                config.terrainAdaptionSteps = 4
-                config.gradientUndergroundColor = Color(0x00, 0xff, 0xc1, 0x0f)
-                config.smoothTerrainHeight = false
-                config.limitLineHeight = true
-                config.smoothPlayerHeight = false
-                config.playerHeightSmoothingSpeed = 1.0f
-                config.renderHorizontalLines = true
-                config.horizontalLineColor = Color(0x75, 0xb1, 0x60, 0xff)
-                config.horizontalLineWidth = 2.0f
-                config.horizontalLineSpacing = 1.0f
-                config.horizontalLineOffset = 0.30000013f
-                config.horizontalLinesFollowPlayer = true
-                config.horizontalLinesAbovePlayer = 1
-                config.horizontalLinesBelowPlayer = 1
-                config.horizontalLineHeight = 0.0f
-                config.smoothLineMovement = false
-            }
-        }
-    }
 
     fun createScreen(parent: Screen): Screen {
         val config = ModConfig.INSTANCE
@@ -325,7 +24,7 @@ object ConfigScreenProvider {
             }
 
         // 1. Presets Category (Main Tab)
-        val presetsCategory = ConfigCategory.createBuilder()
+        val presetsCategoryBuilder = ConfigCategory.createBuilder()
             .name(Component.literal("Presets"))
             .option(
                 Option.createBuilder<Boolean>()
@@ -341,13 +40,20 @@ object ConfigScreenProvider {
                     }
                     .build()
             )
-            .option(
+
+        for (preset in Preset.entries) {
+            presetsCategoryBuilder.option(
                 ButtonOption.createBuilder()
-                    .name(Component.literal("Vanilla Plus"))
-                    .description(OptionDescription.of(Component.literal("A premium preset featuring yellow chunk borders and terrain-adaptive lines, paired with yellow grid-locked horizontal layers (smooth movement off).")))
+                    .name(Component.literal(preset.displayName))
+                    .description(
+                        OptionDescription.createBuilder()
+                            .text(Component.literal(preset.description))
+                            .webpImage(Identifier.fromNamespaceAndPath("betterchunkborders", "config/previews/${preset.id}.webp"))
+                            .build()
+                    )
                     .text(Component.literal("Apply"))
-                    .action { button ->
-                        applyPreset("vanilla_plus", config)
+                    .action { _, _ ->
+                        preset.applyTo(config)
                         ModConfig.save()
                         Minecraft.getInstance().execute {
                             Minecraft.getInstance().setScreen(createScreen(parent))
@@ -355,119 +61,8 @@ object ConfigScreenProvider {
                     }
                     .build()
             )
-            .option(
-                ButtonOption.createBuilder()
-                    .name(Component.literal("Red Gradient (Adaptive)"))
-                    .description(OptionDescription.of(Component.literal("A premium preset featuring red terrain-adaptive gradient walls and vertical lines following the player Y, without horizontal lines.")))
-                    .text(Component.literal("Apply"))
-                    .action { button ->
-                        applyPreset("red_gradient_adaptive", config)
-                        ModConfig.save()
-                        Minecraft.getInstance().execute {
-                            Minecraft.getInstance().setScreen(createScreen(parent))
-                        }
-                    }
-                    .build()
-            )
-            .option(
-                ButtonOption.createBuilder()
-                    .name(Component.literal("Terrain Adaptive (Sloped)"))
-                    .description(OptionDescription.of(Component.literal("High-quality sloped walls and lines that follow the terrain surface contour.")))
-                    .text(Component.literal("Apply"))
-                    .action { button ->
-                        applyPreset("terrain_adaptive_sloped", config)
-                        ModConfig.save()
-                        Minecraft.getInstance().execute {
-                            Minecraft.getInstance().setScreen(createScreen(parent))
-                        }
-                    }
-                    .build()
-            )
-            .option(
-                ButtonOption.createBuilder()
-                    .name(Component.literal("Red Grid (Adaptive)"))
-                    .description(OptionDescription.of(Component.literal("A premium preset featuring red terrain-adaptive sloped lines with grid spacing 4, without gradient walls or horizontal lines.")))
-                    .text(Component.literal("Apply"))
-                    .action { button ->
-                        applyPreset("red_grid_adaptive", config)
-                        ModConfig.save()
-                        Minecraft.getInstance().execute {
-                            Minecraft.getInstance().setScreen(createScreen(parent))
-                        }
-                    }
-                    .build()
-            )
-            .option(
-                ButtonOption.createBuilder()
-                    .name(Component.literal("No Lines, Green"))
-                    .description(OptionDescription.of(Component.literal("A premium preset featuring green fading overlays conforming to every block with zero vertical lines and surrounding corner borders.")))
-                    .text(Component.literal("Apply"))
-                    .action { button ->
-                        applyPreset("no_lines_green", config)
-                        ModConfig.save()
-                        Minecraft.getInstance().execute {
-                            Minecraft.getInstance().setScreen(createScreen(parent))
-                        }
-                    }
-                    .build()
-            )
-            .option(
-                ButtonOption.createBuilder()
-                    .name(Component.literal("Clean White Grid"))
-                    .description(OptionDescription.of(Component.literal("A neat white grid overlay with 4-block spacing and subtle white boundaries conforming to the terrain contours.")))
-                    .text(Component.literal("Apply"))
-                    .action { button ->
-                        applyPreset("clean_white_grid", config)
-                        ModConfig.save()
-                        Minecraft.getInstance().execute {
-                            Minecraft.getInstance().setScreen(createScreen(parent))
-                        }
-                    }
-                    .build()
-            )
-            .option(
-                ButtonOption.createBuilder()
-                    .name(Component.literal("Lime Minimalist"))
-                    .description(OptionDescription.of(Component.literal("A clean and subtle preset with semi-transparent lime-green borders and vertical lines following the player Y within a 12-block range, without gradient walls or horizontal lines.")))
-                    .text(Component.literal("Apply"))
-                    .action { button ->
-                        applyPreset("minimalist", config)
-                        ModConfig.save()
-                        Minecraft.getInstance().execute {
-                            Minecraft.getInstance().setScreen(createScreen(parent))
-                        }
-                    }
-                    .build()
-            )
-            .option(
-                ButtonOption.createBuilder()
-                    .name(Component.literal("Teal Layers"))
-                    .description(OptionDescription.of(Component.literal("A premium preset featuring teal borders and vertical lines paired with horizontal layers that follow the player Y.")))
-                    .text(Component.literal("Apply"))
-                    .action { button ->
-                        applyPreset("teal_layers", config)
-                        ModConfig.save()
-                        Minecraft.getInstance().execute {
-                            Minecraft.getInstance().setScreen(createScreen(parent))
-                        }
-                    }
-                    .build()
-            )
-            .option(
-                ButtonOption.createBuilder()
-                    .name(Component.literal("Green Layers"))
-                    .description(OptionDescription.of(Component.literal("A premium preset with a green grid and player-relative horizontal layers locked to a fixed grid (smooth movement off).")))
-                    .text(Component.literal("Apply"))
-                    .action { button ->
-                        applyPreset("green_layers", config)
-                        ModConfig.save()
-                        Minecraft.getInstance().execute {
-                            Minecraft.getInstance().setScreen(createScreen(parent))
-                        }
-                    }
-                    .build()
-            )
-            .build()
+        }
+        val presetsCategory = presetsCategoryBuilder.build()
 
         // 2. Vertical Lines Category (Second Tab)
         val customCategory = ConfigCategory.createBuilder()
@@ -515,6 +110,31 @@ object ConfigScreenProvider {
                 Color(255, 0, 0, 255),
                 { config.lineColor },
                 { config.lineColor = it }
+            )
+            .controller { opt ->
+                ColorControllerBuilder.create(opt)
+                    .allowAlpha(true)
+            }
+            .build()
+
+        val useSeparateCornerColorOption = Option.createBuilder<Boolean>()
+            .name(Component.literal("Use Separate Corner Color"))
+            .description(OptionDescription.of(Component.literal("When enabled, the 4 main corner lines can have a different color than the inner grid lines.")))
+            .binding(
+                false,
+                { config.useSeparateCornerColor },
+                { config.useSeparateCornerColor = it }
+            )
+            .controller { opt -> TickBoxControllerBuilder.create(opt) }
+            .build()
+
+        val cornerLineColorOption = Option.createBuilder<Color>()
+            .name(Component.literal("Corner Line Color"))
+            .description(OptionDescription.of(Component.literal("The color of the 4 main corner lines when 'Use Separate Corner Color' is enabled.")))
+            .binding(
+                Color(255, 0, 255, 255),
+                { config.cornerLineColor },
+                { config.cornerLineColor = it }
             )
             .controller { opt ->
                 ColorControllerBuilder.create(opt)
@@ -996,6 +616,8 @@ object ConfigScreenProvider {
             .option(renderLinesOption)
             .option(gridSpacingOption)
             .option(lineColorOption)
+            .option(useSeparateCornerColorOption)
+            .option(cornerLineColorOption)
             .option(lineWidthOption)
             .option(useGradientLinesOption)
             .option(limitLineHeightOption)
@@ -1072,6 +694,8 @@ object ConfigScreenProvider {
             // 1. Line Settings
             gridSpacingOption.setAvailable(linesActive)
             lineColorOption.setAvailable(linesActive)
+            useSeparateCornerColorOption.setAvailable(linesActive)
+            cornerLineColorOption.setAvailable(linesActive && useSeparateCornerColorOption.pendingValue())
             lineWidthOption.setAvailable(linesActive)
             useGradientLinesOption.setAvailable(linesActive)
             limitLineHeightOption.setAvailable(linesActive)
@@ -1117,17 +741,18 @@ object ConfigScreenProvider {
         }
 
         // Add listeners to reactively refresh availability on value change
-        renderLinesOption.addListener { _, _ -> updateAvailability() }
-        useGradientLinesOption.addListener { _, _ -> updateAvailability() }
-        limitLineHeightOption.addListener { _, _ -> updateAvailability() }
-        renderGradientsOption.addListener { _, _ -> updateAvailability() }
-        useTerrainHeightmapOption.addListener { _, _ -> updateAvailability() }
-        smoothPlayerHeightOption.addListener { _, _ -> updateAvailability() }
-        renderSurroundingBordersOption.addListener { _, _ -> updateAvailability() }
-        renderHorizontalLinesOption.addListener { _, _ -> updateAvailability() }
-        horizontalLinesFollowPlayerOption.addListener { _, _ -> updateAvailability() }
-        horizontalLineHeightOption.addListener { _, _ -> updateAvailability() }
-        mirrorGradientOption.addListener { _, _ -> updateAvailability() }
+        renderLinesOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        useGradientLinesOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        limitLineHeightOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        renderGradientsOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        useTerrainHeightmapOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        smoothPlayerHeightOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        renderSurroundingBordersOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        renderHorizontalLinesOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        horizontalLinesFollowPlayerOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        horizontalLineHeightOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        mirrorGradientOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
+        useSeparateCornerColorOption.addEventListener { _, event -> if (event == OptionEventListener.Event.STATE_CHANGE) updateAvailability() }
 
         // Set initial availability state
         updateAvailability()
