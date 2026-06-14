@@ -114,6 +114,11 @@ publishMods {
 		projectId.set(providers.gradleProperty("modrinth_id"))
 		accessToken.set(providers.environmentVariable("MODRINTH_TOKEN"))
 		minecraftVersions.add(providers.gradleProperty("minecraft_version").get())
+
+		requires("fabric-api")
+		requires("fabric-language-kotlin")
+		requires("yacl")
+		requires("modmenu")
 	}
 }
 
