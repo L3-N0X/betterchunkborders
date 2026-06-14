@@ -1,11 +1,13 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.net.URL
 import java.net.URLClassLoader
+import me.modmuss50.mpp.ReleaseType
 
 plugins {
 	id("net.fabricmc.fabric-loom-remap")
 	`maven-publish`
 	id("org.jetbrains.kotlin.jvm") version "2.3.21"
+	id("me.modmuss50.mod-publish-plugin") version "2.0.0"
 }
 
 version = providers.gradleProperty("mod_version").get()
@@ -102,6 +104,23 @@ publishing {
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
+	}
+}
+
+publishMods {
+	file.set(tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar").flatMap { it.archiveFile })
+	changelog.set(providers.environmentVariable("CHANGELOG").orElse("No changelog provided"))
+	type.set(
+		if (version.toString().contains("beta", ignoreCase = true)) ReleaseType.BETA
+		else if (version.toString().contains("alpha", ignoreCase = true)) ReleaseType.ALPHA
+		else ReleaseType.STABLE
+	)
+	modLoaders.add("fabric")
+
+	modrinth {
+		projectId.set(providers.gradleProperty("modrinth_id"))
+		accessToken.set(providers.environmentVariable("MODRINTH_TOKEN"))
+		minecraftVersions.add(providers.gradleProperty("minecraft_version").get())
 	}
 }
 
