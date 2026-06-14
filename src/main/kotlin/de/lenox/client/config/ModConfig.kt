@@ -14,6 +14,8 @@ data class ModConfig(
     var modEnabled: Boolean = true,
     var gridSpacing: Int = 16,
     var lineColor: Color = Color(255, 0, 0, 255),
+    var useSeparateCornerColor: Boolean = false,
+    var cornerLineColor: Color = Color(255, 0, 255, 255),
     var lineWidth: Float = 2.0f,
     var renderGradients: Boolean = true,
     var gradientTopColor: Color = Color(255, 0, 0, 0),
@@ -48,7 +50,7 @@ data class ModConfig(
     var mirrorGradient: Boolean = true
 ) {
     fun save() {
-        Companion.save(this)
+        save(this)
     }
 
     companion object {
