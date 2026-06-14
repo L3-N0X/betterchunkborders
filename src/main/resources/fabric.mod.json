@@ -2,16 +2,15 @@
 	"schemaVersion": 1,
 	"id": "betterchunkborders",
 	"version": "${version}",
-	"name": "betterchunkborders",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Better Chunk Borders",
+	"description": "Improves the visual appearance of chunk borders.",
 	"authors": [
-		"Me!"
+		"L3-N0X"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/L3-N0X/betterchunkborders"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/betterchunkborders/icon.png",
 	"environment": "*",
 	"entrypoints": {
