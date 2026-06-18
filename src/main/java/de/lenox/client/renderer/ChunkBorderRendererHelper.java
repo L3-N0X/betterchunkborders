@@ -28,7 +28,7 @@ public class ChunkBorderRendererHelper {
             return false;
         }
 
-        var entity = mc.gameRenderer.getMainCamera().entity();
+        var entity = mc.gameRenderer.mainCamera().entity();
         if (entity == null) {
             return false;
         }

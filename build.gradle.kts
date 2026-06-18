@@ -4,7 +4,8 @@ import java.net.URLClassLoader
 import me.modmuss50.mpp.ReleaseType
 
 plugins {
-	id("net.fabricmc.fabric-loom")
+//	id("fabric-loom") version "1.17-SNAPSHOT"
+	id("net.fabricmc.fabric-loom") version "1.17-SNAPSHOT"
 	`maven-publish`
 	id("org.jetbrains.kotlin.jvm") version "2.4.0"
 	id("me.modmuss50.mod-publish-plugin") version "2.0.0"

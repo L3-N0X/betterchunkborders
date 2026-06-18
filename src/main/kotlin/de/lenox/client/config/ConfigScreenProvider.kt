@@ -56,7 +56,7 @@ object ConfigScreenProvider {
                         preset.applyTo(config)
                         ModConfig.save()
                         Minecraft.getInstance().execute {
-                            Minecraft.getInstance().setScreen(createScreen(parent))
+                            Minecraft.getInstance().setScreenAndShow(createScreen(parent))
                         }
                     }
                     .build()
